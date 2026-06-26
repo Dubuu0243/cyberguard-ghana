@@ -1,338 +1,783 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>CyberGuard Ghana — Protecting Ghanaians in the Digital Age</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<meta name="theme-color" content="#0A0A0A"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-title" content="CyberGuard GH"/>
+<title>CyberGuard Ghana</title>
+<link rel="manifest" href="manifest.json"/>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
-  :root {
-    --black: #080808; --dark: #111111; --card: #161616; --border: #222222;
-    --gold: #F5A623; --gold-dim: #B87A10; --white: #F0F0F0; --gray: #888888;
-    --light: #CCCCCC; --danger: #E74C3C; --green: #27AE60;
-  }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  html { scroll-behavior:smooth; }
-  body { background:var(--black); color:var(--white); font-family:'Space Grotesk',sans-serif; line-height:1.6; overflow-x:hidden; }
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
 
-  nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:18px 48px; background:rgba(8,8,8,0.92); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); }
-  .nav-logo { display:flex; align-items:center; gap:12px; text-decoration:none; }
-  .nav-shield { width:36px; height:36px; background:var(--gold); clip-path:polygon(50% 0%,100% 25%,100% 70%,50% 100%,0% 70%,0% 25%); display:flex; align-items:center; justify-content:center; position:relative; flex-shrink:0; }
-  .nav-shield::after { content:'🔒'; font-size:14px; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); }
-  .nav-brand { font-size:18px; font-weight:700; }
-  .nav-brand span { color:var(--gold); }
-  .nav-links { display:flex; gap:32px; list-style:none; }
-  .nav-links a { color:var(--gray); text-decoration:none; font-size:14px; font-weight:500; transition:color 0.2s; }
-  .nav-links a:hover { color:var(--gold); }
-  .nav-cta { background:var(--gold) !important; color:var(--black) !important; padding:8px 20px; border-radius:6px; font-weight:700 !important; }
-  .nav-cta:hover { background:#e09510 !important; }
+:root {
+  --bg: #0A0A0A;
+  --card: #141414;
+  --card2: #1A1A1A;
+  --border: #242424;
+  --gold: #F5A623;
+  --gold2: #B87A10;
+  --red: #E74C3C;
+  --green: #27AE60;
+  --white: #F0F0F0;
+  --gray: #777777;
+  --light: #BBBBBB;
+  --nav-h: 60px;
+  --bottom-h: 64px;
+}
 
-  #hero { min-height:100vh; display:flex; align-items:center; padding:120px 48px 80px; position:relative; overflow:hidden; }
-  .hero-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(245,166,35,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(245,166,35,0.04) 1px,transparent 1px); background-size:48px 48px; }
-  .hero-glow { position:absolute; width:600px; height:600px; background:radial-gradient(circle,rgba(245,166,35,0.08) 0%,transparent 70%); top:50%; left:50%; transform:translate(-50%,-50%); pointer-events:none; }
-  .hero-content { position:relative; max-width:760px; }
-  .hero-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(245,166,35,0.1); border:1px solid rgba(245,166,35,0.3); color:var(--gold); padding:6px 14px; border-radius:100px; font-size:12px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:28px; }
-  .hero-badge::before { content:'🛡'; font-size:14px; }
-  h1 { font-size:clamp(42px,6vw,76px); font-weight:700; line-height:1.05; letter-spacing:-1.5px; margin-bottom:24px; }
-  h1 .gold { color:var(--gold); }
-  h1 .outline { -webkit-text-stroke:1px var(--white); color:transparent; }
-  .hero-desc { font-size:18px; color:var(--light); max-width:560px; margin-bottom:40px; line-height:1.7; font-weight:300; }
-  .hero-actions { display:flex; gap:16px; flex-wrap:wrap; }
-  .btn-primary { background:var(--gold); color:var(--black); padding:14px 32px; border-radius:8px; font-weight:700; font-size:15px; text-decoration:none; display:inline-block; transition:transform 0.2s,background 0.2s; }
-  .btn-primary:hover { background:#e09510; transform:translateY(-2px); }
-  .btn-secondary { border:1px solid var(--border); color:var(--light); padding:14px 32px; border-radius:8px; font-weight:500; font-size:15px; text-decoration:none; display:inline-block; transition:border-color 0.2s,color 0.2s; }
-  .btn-secondary:hover { border-color:var(--gold); color:var(--gold); }
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html,body { height:100%; overflow:hidden; }
+body { background:var(--bg); color:var(--white); font-family:'Space Grotesk',sans-serif; }
 
-  .threat-ticker { position:absolute; right:48px; top:50%; transform:translateY(-50%); width:280px; background:var(--card); border:1px solid var(--border); border-radius:12px; overflow:hidden; }
-  .ticker-header { background:var(--danger); padding:10px 16px; font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; display:flex; align-items:center; gap:8px; }
-  .ticker-dot { width:8px; height:8px; border-radius:50%; background:white; animation:blink 1s infinite; }
-  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
-  .ticker-items { padding:12px; display:flex; flex-direction:column; gap:8px; }
-  .ticker-item { background:var(--dark); border-radius:8px; padding:10px 12px; border-left:3px solid var(--gold); }
-  .ticker-item .amount { font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; color:var(--danger); }
-  .ticker-item .detail { font-size:11px; color:var(--gray); margin-top:2px; }
+/* ── LAYOUT ── */
+#app { display:flex; flex-direction:column; height:100vh; }
 
-  #stats { padding:60px 48px; border-top:1px solid var(--border); border-bottom:1px solid var(--border); background:var(--dark); }
-  .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); }
-  .stat-item { padding:24px 32px; border-right:1px solid var(--border); text-align:center; }
-  .stat-item:last-child { border-right:none; }
-  .stat-number { font-family:'JetBrains Mono',monospace; font-size:42px; font-weight:700; color:var(--gold); line-height:1; }
-  .stat-label { font-size:13px; color:var(--gray); margin-top:8px; text-transform:uppercase; letter-spacing:0.8px; }
+/* TOP NAV */
+.top-nav {
+  height:var(--nav-h);
+  background:rgba(10,10,10,0.95);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 20px;
+  flex-shrink:0;
+  position:relative; z-index:10;
+}
+.nav-logo { display:flex; align-items:center; gap:10px; }
+.nav-shield {
+  width:32px; height:32px;
+  background:var(--gold);
+  clip-path:polygon(50% 0%,100% 25%,100% 70%,50% 100%,0% 70%,0% 25%);
+  display:flex; align-items:center; justify-content:center;
+  font-size:13px;
+}
+.nav-title { font-size:16px; font-weight:700; }
+.nav-title span { color:var(--gold); }
+.nav-badge {
+  background:var(--red);
+  color:white; font-size:10px; font-weight:700;
+  padding:3px 8px; border-radius:100px;
+  letter-spacing:0.5px;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
 
-  section { padding:100px 48px; }
-  .section-eyebrow { font-size:11px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:var(--gold); margin-bottom:16px; font-family:'JetBrains Mono',monospace; }
-  h2 { font-size:clamp(28px,4vw,44px); font-weight:700; letter-spacing:-0.8px; line-height:1.1; margin-bottom:16px; }
-  .section-desc { font-size:16px; color:var(--light); max-width:520px; line-height:1.7; font-weight:300; margin-bottom:56px; }
+/* CONTENT */
+.content {
+  flex:1;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  padding-bottom:calc(var(--bottom-h) + 16px);
+}
 
-  #services { background:var(--black); }
-  .services-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:12px; overflow:hidden; }
-  .service-card { background:var(--card); padding:36px 32px; transition:background 0.2s; }
-  .service-card:hover { background:#1c1c1c; }
-  .service-icon { font-size:28px; margin-bottom:20px; display:block; }
-  .service-card h3 { font-size:18px; font-weight:700; margin-bottom:10px; color:var(--white); }
-  .service-card p { font-size:14px; color:var(--gray); line-height:1.65; }
-  .service-tag { display:inline-block; margin-top:16px; background:rgba(245,166,35,0.1); color:var(--gold); font-size:11px; font-weight:600; padding:4px 10px; border-radius:4px; }
+/* BOTTOM NAV */
+.bottom-nav {
+  height:var(--bottom-h);
+  background:rgba(10,10,10,0.98);
+  border-top:1px solid var(--border);
+  display:flex;
+  flex-shrink:0;
+}
+.nav-item {
+  flex:1; display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  gap:4px; cursor:pointer;
+  transition:color 0.2s;
+  color:var(--gray);
+  border:none; background:none;
+  font-family:'Space Grotesk',sans-serif;
+}
+.nav-item.active { color:var(--gold); }
+.nav-item .nav-icon { font-size:20px; line-height:1; }
+.nav-item .nav-label { font-size:10px; font-weight:600; letter-spacing:0.3px; }
 
-  #products { background:var(--dark); }
-  .products-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:20px; }
-  .product-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:32px; display:flex; gap:20px; align-items:flex-start; transition:border-color 0.2s,transform 0.2s; text-decoration:none; }
-  .product-card:hover { border-color:var(--gold); transform:translateY(-3px); }
-  .product-emoji { font-size:36px; flex-shrink:0; }
-  .product-info h3 { font-size:16px; font-weight:700; color:var(--white); margin-bottom:6px; }
-  .product-info p { font-size:13px; color:var(--gray); line-height:1.6; margin-bottom:12px; }
-  .product-price { font-family:'JetBrains Mono',monospace; font-size:15px; font-weight:700; color:var(--gold); }
+/* SCREENS */
+.screen { display:none; padding:16px; }
+.screen.active { display:block; }
 
-  #why { background:var(--black); }
-  .why-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
-  .why-list { display:flex; flex-direction:column; gap:24px; }
-  .why-item { display:flex; gap:16px; align-items:flex-start; }
-  .why-num { font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:700; color:var(--gold); opacity:0.6; flex-shrink:0; padding-top:3px; }
-  .why-item h4 { font-size:15px; font-weight:700; color:var(--white); margin-bottom:4px; }
-  .why-item p { font-size:13px; color:var(--gray); line-height:1.6; }
-  .why-visual { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:36px; }
-  .terminal { font-family:'JetBrains Mono',monospace; font-size:12px; line-height:2; }
-  .t-line { display:flex; gap:12px; }
-  .t-prompt { color:var(--gold); }
-  .t-cmd { color:var(--green); }
-  .t-output { color:var(--gray); padding-left:20px; }
-  .t-success { color:var(--green); }
-  .t-warn { color:var(--gold); }
+/* ── HOME SCREEN ── */
+.hero-card {
+  background:linear-gradient(135deg, #1A1200, #0A0A0A);
+  border:1px solid var(--gold);
+  border-radius:16px;
+  padding:24px 20px;
+  margin-bottom:16px;
+  position:relative; overflow:hidden;
+}
+.hero-card::before {
+  content:'';
+  position:absolute; top:-40px; right:-40px;
+  width:150px; height:150px;
+  background:radial-gradient(circle, rgba(245,166,35,0.15), transparent);
+  border-radius:50%;
+}
+.hero-greeting { font-size:13px; color:var(--gray); margin-bottom:4px; }
+.hero-title { font-size:22px; font-weight:700; margin-bottom:8px; }
+.hero-title span { color:var(--gold); }
+.hero-subtitle { font-size:13px; color:var(--light); line-height:1.5; }
+.status-row {
+  display:flex; align-items:center; gap:8px;
+  margin-top:16px;
+  background:rgba(39,174,96,0.1);
+  border:1px solid rgba(39,174,96,0.3);
+  border-radius:8px; padding:8px 12px;
+}
+.status-dot { width:8px; height:8px; border-radius:50%; background:var(--green); animation:pulse 2s infinite; }
+.status-text { font-size:12px; color:var(--green); font-weight:600; }
 
-  #about { background:var(--dark); }
-  .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
-  .about-text p { font-size:15px; color:var(--light); line-height:1.8; margin-bottom:16px; font-weight:300; }
-  .about-badges { display:flex; flex-wrap:wrap; gap:10px; margin-top:28px; }
-  .badge { background:rgba(245,166,35,0.08); border:1px solid rgba(245,166,35,0.2); color:var(--gold); padding:6px 14px; border-radius:6px; font-size:12px; font-weight:600; }
-  .founder-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:40px; text-align:center; }
-  .founder-avatar { width:90px; height:90px; background:linear-gradient(135deg,var(--gold),var(--gold-dim)); border-radius:50%; margin:0 auto 20px; display:flex; align-items:center; justify-content:center; font-size:36px; }
-  .founder-name { font-size:20px; font-weight:700; color:var(--white); margin-bottom:4px; }
-  .founder-title { font-size:13px; color:var(--gold); font-weight:500; margin-bottom:16px; }
-  .founder-bio { font-size:13px; color:var(--gray); line-height:1.7; }
+.section-title {
+  font-size:11px; font-weight:700;
+  letter-spacing:2px; text-transform:uppercase;
+  color:var(--gray); margin-bottom:12px;
+  font-family:'JetBrains Mono',monospace;
+}
 
-  #contact { background:var(--black); }
-  .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; }
-  .contact-info { display:flex; flex-direction:column; gap:24px; }
-  .contact-item { display:flex; gap:16px; align-items:flex-start; }
-  .contact-icon { width:44px; height:44px; background:rgba(245,166,35,0.1); border:1px solid rgba(245,166,35,0.2); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
-  .contact-item h4 { font-size:13px; color:var(--gray); text-transform:uppercase; letter-spacing:0.8px; margin-bottom:4px; }
-  .contact-item p { font-size:15px; color:var(--white); font-weight:500; }
-  .contact-form { display:flex; flex-direction:column; gap:16px; }
-  .form-group { display:flex; flex-direction:column; gap:6px; }
-  .form-group label { font-size:12px; color:var(--gray); font-weight:600; letter-spacing:0.5px; text-transform:uppercase; }
-  .form-group input, .form-group textarea, .form-group select { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:12px 16px; color:var(--white); font-family:'Space Grotesk',sans-serif; font-size:14px; transition:border-color 0.2s; outline:none; resize:none; }
-  .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color:var(--gold); }
-  .form-group select option { background:var(--card); }
-  .form-group textarea { min-height:100px; }
-  .btn-submit { background:var(--gold); color:var(--black); border:none; padding:14px 32px; border-radius:8px; font-weight:700; font-size:15px; cursor:pointer; font-family:'Space Grotesk',sans-serif; transition:background 0.2s,transform 0.2s; width:100%; }
-  .btn-submit:hover { background:#e09510; transform:translateY(-2px); }
+/* Stats row */
+.stats-row { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:20px; }
+.stat-box {
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px; padding:14px 10px;
+  text-align:center;
+}
+.stat-num { font-family:'JetBrains Mono',monospace; font-size:20px; font-weight:700; color:var(--gold); }
+.stat-lbl { font-size:10px; color:var(--gray); margin-top:4px; line-height:1.3; }
 
-  footer { background:var(--dark); border-top:1px solid var(--border); padding:48px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px; }
-  .footer-brand { font-size:16px; font-weight:700; }
-  .footer-brand span { color:var(--gold); }
-  .footer-copy { font-size:13px; color:var(--gray); }
-  .footer-links { display:flex; gap:24px; }
-  .footer-links a { font-size:13px; color:var(--gray); text-decoration:none; transition:color 0.2s; }
-  .footer-links a:hover { color:var(--gold); }
+/* Quick actions */
+.quick-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:20px; }
+.quick-card {
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px; padding:16px;
+  cursor:pointer; transition:border-color 0.2s, transform 0.1s;
+  text-align:left;
+}
+.quick-card:active { transform:scale(0.97); }
+.quick-card:hover { border-color:var(--gold); }
+.quick-icon { font-size:24px; margin-bottom:8px; display:block; }
+.quick-title { font-size:13px; font-weight:700; color:var(--white); margin-bottom:4px; }
+.quick-desc { font-size:11px; color:var(--gray); line-height:1.4; }
+.quick-card.danger { border-color:rgba(231,76,60,0.3); }
+.quick-card.danger:hover { border-color:var(--red); }
 
-  @media (max-width:900px) {
-    nav { padding:16px 20px; }
-    .nav-links { display:none; }
-    #hero { padding:100px 20px 60px; }
-    .threat-ticker { display:none; }
-    #stats { padding:40px 20px; }
-    .stats-grid { grid-template-columns:repeat(2,1fr); }
-    .stat-item { border-right:none; border-bottom:1px solid var(--border); }
-    section { padding:60px 20px; }
-    .services-grid,.products-grid,.why-grid,.about-grid,.contact-grid { grid-template-columns:1fr; }
-    footer { flex-direction:column; align-items:flex-start; padding:32px 20px; }
-  }
+/* Alert ticker */
+.alert-card {
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px; overflow:hidden;
+  margin-bottom:16px;
+}
+.alert-header {
+  background:var(--red);
+  padding:8px 14px;
+  display:flex; align-items:center; gap:8px;
+  font-size:11px; font-weight:700; letter-spacing:1px;
+}
+.alert-items { padding:12px; display:flex; flex-direction:column; gap:8px; }
+.alert-item {
+  background:var(--card2);
+  border-radius:8px; padding:10px 12px;
+  border-left:3px solid var(--gold);
+}
+.alert-amount { font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:700; color:var(--red); }
+.alert-detail { font-size:11px; color:var(--gray); margin-top:2px; }
+
+/* ── CHECKER SCREEN ── */
+.checker-intro {
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px; padding:16px; margin-bottom:16px;
+}
+.checker-intro p { font-size:13px; color:var(--light); line-height:1.6; }
+
+.check-list { display:flex; flex-direction:column; gap:10px; margin-bottom:20px; }
+.check-item {
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px; padding:14px 16px;
+  display:flex; align-items:center; gap:14px;
+  cursor:pointer; transition:border-color 0.2s;
+}
+.check-item.checked { border-color:var(--green); background:rgba(39,174,96,0.05); }
+.check-item.flagged { border-color:var(--red); background:rgba(231,76,60,0.05); }
+.check-checkbox {
+  width:24px; height:24px; border-radius:50%;
+  border:2px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0; font-size:12px;
+  transition:all 0.2s;
+}
+.check-item.checked .check-checkbox { background:var(--green); border-color:var(--green); }
+.check-item.flagged .check-checkbox { background:var(--red); border-color:var(--red); }
+.check-text { flex:1; }
+.check-title { font-size:13px; font-weight:600; color:var(--white); margin-bottom:2px; }
+.check-sub { font-size:11px; color:var(--gray); }
+.check-flag { font-size:10px; font-weight:700; padding:2px 8px; border-radius:4px; }
+.check-flag.safe { background:rgba(39,174,96,0.15); color:var(--green); }
+.check-flag.risk { background:rgba(231,76,60,0.15); color:var(--red); }
+
+.result-card {
+  border-radius:12px; padding:20px;
+  text-align:center; margin-bottom:16px;
+  display:none;
+}
+.result-card.show { display:block; }
+.result-card.clean { background:rgba(39,174,96,0.1); border:1px solid rgba(39,174,96,0.3); }
+.result-card.risk { background:rgba(231,76,60,0.1); border:1px solid rgba(231,76,60,0.3); }
+.result-icon { font-size:40px; margin-bottom:10px; }
+.result-title { font-size:18px; font-weight:700; margin-bottom:6px; }
+.result-desc { font-size:13px; color:var(--light); line-height:1.5; }
+
+.btn-check {
+  width:100%; padding:16px;
+  background:var(--gold); color:#0A0A0A;
+  border:none; border-radius:12px;
+  font-size:15px; font-weight:700;
+  font-family:'Space Grotesk',sans-serif;
+  cursor:pointer; transition:transform 0.1s;
+  margin-bottom:10px;
+}
+.btn-check:active { transform:scale(0.98); }
+.btn-reset {
+  width:100%; padding:14px;
+  background:transparent; color:var(--gray);
+  border:1px solid var(--border); border-radius:12px;
+  font-size:14px; font-weight:600;
+  font-family:'Space Grotesk',sans-serif;
+  cursor:pointer;
+}
+
+/* ── TIPS SCREEN ── */
+.tips-filter {
+  display:flex; gap:8px; overflow-x:auto;
+  padding-bottom:4px; margin-bottom:16px;
+  scrollbar-width:none;
+}
+.tips-filter::-webkit-scrollbar { display:none; }
+.filter-btn {
+  padding:6px 14px; border-radius:100px;
+  border:1px solid var(--border);
+  background:transparent; color:var(--gray);
+  font-size:12px; font-weight:600;
+  font-family:'Space Grotesk',sans-serif;
+  cursor:pointer; white-space:nowrap;
+  transition:all 0.2s;
+}
+.filter-btn.active { background:var(--gold); color:#0A0A0A; border-color:var(--gold); }
+
+.tips-list { display:flex; flex-direction:column; gap:12px; }
+.tip-card {
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px; padding:16px;
+  cursor:pointer; transition:border-color 0.2s;
+}
+.tip-card:hover { border-color:var(--gold); }
+.tip-top { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+.tip-emoji { font-size:24px; }
+.tip-category {
+  font-size:10px; font-weight:700;
+  letter-spacing:1px; text-transform:uppercase;
+  color:var(--gold); font-family:'JetBrains Mono',monospace;
+}
+.tip-title { font-size:14px; font-weight:700; color:var(--white); margin-bottom:6px; }
+.tip-body { font-size:12px; color:var(--light); line-height:1.6; }
+.tip-expanded { display:none; margin-top:10px; padding-top:10px; border-top:1px solid var(--border); }
+.tip-expanded.show { display:block; }
+.tip-action {
+  margin-top:10px;
+  background:rgba(245,166,35,0.1);
+  border:1px solid rgba(245,166,35,0.2);
+  border-radius:8px; padding:10px 12px;
+}
+.tip-action-label { font-size:10px; color:var(--gold); font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
+.tip-action-text { font-size:12px; color:var(--light); line-height:1.5; }
+
+/* ── CONTACTS SCREEN ── */
+.contacts-list { display:flex; flex-direction:column; gap:12px; }
+.contact-card {
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px; overflow:hidden;
+}
+.contact-header {
+  padding:12px 16px;
+  display:flex; align-items:center; gap:12px;
+}
+.contact-icon-box {
+  width:44px; height:44px;
+  border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:20px; flex-shrink:0;
+}
+.contact-name { font-size:14px; font-weight:700; color:var(--white); }
+.contact-role { font-size:11px; color:var(--gray); margin-top:2px; }
+.contact-actions { display:flex; border-top:1px solid var(--border); }
+.contact-btn {
+  flex:1; padding:12px;
+  display:flex; align-items:center; justify-content:center; gap:6px;
+  font-size:12px; font-weight:600;
+  color:var(--gold); text-decoration:none;
+  border-right:1px solid var(--border);
+  transition:background 0.2s;
+}
+.contact-btn:last-child { border-right:none; }
+.contact-btn:active { background:rgba(245,166,35,0.1); }
+
+/* CyberGuard card */
+.cyberguard-card {
+  background:linear-gradient(135deg, #1A1200, #111);
+  border:1px solid var(--gold);
+  border-radius:16px; padding:20px;
+  margin-bottom:16px; text-align:center;
+}
+.cg-logo { font-size:36px; margin-bottom:8px; }
+.cg-name { font-size:18px; font-weight:700; margin-bottom:4px; }
+.cg-name span { color:var(--gold); }
+.cg-tagline { font-size:12px; color:var(--gray); margin-bottom:16px; }
+.cg-btns { display:flex; gap:10px; }
+.cg-btn {
+  flex:1; padding:12px;
+  border-radius:10px; font-size:13px; font-weight:700;
+  text-decoration:none; text-align:center;
+  font-family:'Space Grotesk',sans-serif;
+  transition:transform 0.1s;
+}
+.cg-btn:active { transform:scale(0.97); }
+.cg-btn.primary { background:var(--gold); color:#0A0A0A; }
+.cg-btn.secondary { background:var(--card2); color:var(--white); border:1px solid var(--border); }
 </style>
 </head>
 <body>
+<div id="app">
 
-<nav>
-  <a href="#hero" class="nav-logo">
-    <div class="nav-shield"></div>
-    <div class="nav-brand"><span>Cyber</span>Guard Ghana</div>
-  </a>
-  <ul class="nav-links">
-    <li><a href="#services">Services</a></li>
-    <li><a href="#products">Products</a></li>
-    <li><a href="#why">Why Us</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#contact" class="nav-cta">Get Protected</a></li>
-  </ul>
-</nav>
-
-<section id="hero">
-  <div class="hero-grid"></div>
-  <div class="hero-glow"></div>
-  <div class="hero-content">
-    <div class="hero-badge">Ghana's Cybersecurity Company</div>
-    <h1>Protecting<br/><span class="gold">Ghanaians</span><br/><span class="outline">Online.</span></h1>
-    <p class="hero-desc">From MoMo fraud to business data breaches — CyberGuard Ghana helps individuals and businesses stay safe in an increasingly dangerous digital world.</p>
-    <div class="hero-actions">
-      <a href="#services" class="btn-primary">View Our Services</a>
-      <a href="#products" class="btn-secondary">Get Our Guides →</a>
+  <!-- TOP NAV -->
+  <div class="top-nav">
+    <div class="nav-logo">
+      <div class="nav-shield">🔒</div>
+      <div class="nav-title"><span>Cyber</span>Guard GH</div>
     </div>
+    <div class="nav-badge">LIVE</div>
   </div>
-  <div class="threat-ticker">
-    <div class="ticker-header"><div class="ticker-dot"></div>Live Threats in Ghana</div>
-    <div class="ticker-items">
-      <div class="ticker-item"><div class="amount">GHS 1,200 lost</div><div class="detail">MoMo scam — Accra • 2hrs ago</div></div>
-      <div class="ticker-item"><div class="amount">SIM Swap Attack</div><div class="detail">Kumasi resident targeted • Today</div></div>
-      <div class="ticker-item"><div class="amount">Phishing Link</div><div class="detail">Fake MTN reward link spreading • Now</div></div>
-      <div class="ticker-item"><div class="amount">GHS 800 lost</div><div class="detail">Wrong transfer scam — Takoradi</div></div>
-    </div>
-  </div>
-</section>
 
-<div id="stats">
-  <div class="stats-grid">
-    <div class="stat-item"><div class="stat-number">GHS 56M+</div><div class="stat-label">Lost to MoMo Fraud (2023)</div></div>
-    <div class="stat-item"><div class="stat-number">1 in 3</div><div class="stat-label">Ghanaians Targeted</div></div>
-    <div class="stat-item"><div class="stat-number">90%</div><div class="stat-label">Cases Are Preventable</div></div>
-    <div class="stat-item"><div class="stat-number">24/7</div><div class="stat-label">Threats Never Sleep</div></div>
-  </div>
-</div>
+  <!-- CONTENT -->
+  <div class="content">
 
-<section id="services">
-  <div class="section-eyebrow">// What We Do</div>
-  <h2>Services Built for<br/>Ghana's Digital Reality</h2>
-  <p class="section-desc">Practical, affordable cybersecurity solutions for individuals, small businesses, and organizations across Ghana.</p>
-  <div class="services-grid">
-    <div class="service-card"><span class="service-icon">🛡️</span><h3>Security Audits</h3><p>We assess your business's digital systems, identify vulnerabilities, and give you a clear action plan to fix them before attackers do.</p><span class="service-tag">For Businesses</span></div>
-    <div class="service-card"><span class="service-icon">📱</span><h3>MoMo Fraud Protection</h3><p>Training and guides to help you and your team recognize and avoid the most common mobile money scams in Ghana.</p><span class="service-tag">For Individuals</span></div>
-    <div class="service-card"><span class="service-icon">🔐</span><h3>Data Protection Consulting</h3><p>Help businesses secure customer data, set up safe payment systems, and comply with Ghana's data protection standards.</p><span class="service-tag">For Businesses</span></div>
-    <div class="service-card"><span class="service-icon">🎓</span><h3>Cybersecurity Training</h3><p>Interactive workshops and online training for staff, students, and organizations — tailored to the Ghanaian context.</p><span class="service-tag">For Teams</span></div>
-    <div class="service-card"><span class="service-icon">🔍</span><h3>Incident Response</h3><p>Already been hacked or scammed? We help you assess the damage, contain the breach, and recover safely.</p><span class="service-tag">Emergency</span></div>
-    <div class="service-card"><span class="service-icon">📋</span><h3>Security Policy Writing</h3><p>We help businesses create clear cybersecurity policies and procedures that protect both the company and its customers.</p><span class="service-tag">For Organizations</span></div>
-  </div>
-</section>
+    <!-- HOME -->
+    <div class="screen active" id="screen-home">
+      <div class="hero-card">
+        <div class="hero-greeting">Welcome to</div>
+        <div class="hero-title"><span>CyberGuard</span> Ghana 🛡️</div>
+        <div class="hero-subtitle">Your personal cybersecurity companion. Stay protected from MoMo fraud, spyware, and online scams.</div>
+        <div class="status-row">
+          <div class="status-dot"></div>
+          <div class="status-text">Protection Active — Ghana Threats Monitored</div>
+        </div>
+      </div>
 
-<section id="products">
-  <div class="section-eyebrow">// Digital Products</div>
-  <h2>Buy & Download<br/>Our Security Guides</h2>
-  <p class="section-desc">Practical, affordable digital guides you can use immediately to protect yourself and your business.</p>
-  <div class="products-grid">
-    <a href="https://selar.com/70n4qlv9z0" target="_blank" class="product-card">
-      <div class="product-emoji">🛡️</div>
-      <div class="product-info"><h3>MoMo Fraud Prevention Guide</h3><p>10 real scams Ghanaians fall for daily — with step-by-step protection tips and emergency contacts.</p><div class="product-price">GHS 30</div></div>
-    </a>
-    <a href="#contact" class="product-card">
-      <div class="product-emoji">🔒</div>
-      <div class="product-info"><h3>Business Online Safety Checklist</h3><p>A complete security checklist for Ghanaian small businesses — protect your data, customers, and money.</p><div class="product-price">Coming Soon</div></div>
-    </a>
-    <a href="#contact" class="product-card">
-      <div class="product-emoji">📧</div>
-      <div class="product-info"><h3>Phishing & Email Scam Guide</h3><p>How to spot and avoid fake emails, links, and websites designed to steal your information.</p><div class="product-price">Coming Soon</div></div>
-    </a>
-    <a href="#contact" class="product-card">
-      <div class="product-emoji">📱</div>
-      <div class="product-info"><h3>Phone & Social Media Security Guide</h3><p>Lock down your phone, WhatsApp, Facebook, and Instagram from hackers and scammers.</p><div class="product-price">Coming Soon</div></div>
-    </a>
-  </div>
-</section>
+      <div class="section-title">// Threat Stats — Ghana 2026</div>
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="stat-num">56M+</div>
+          <div class="stat-lbl">GHS Lost to Fraud</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">1in3</div>
+          <div class="stat-lbl">Ghanaians Targeted</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">90%</div>
+          <div class="stat-lbl">Cases Preventable</div>
+        </div>
+      </div>
 
-<section id="why">
-  <div class="section-eyebrow">// Why CyberGuard Ghana</div>
-  <h2>Built for Ghana.<br/>Not Copied from Abroad.</h2>
-  <div class="why-grid">
-    <div class="why-list">
-      <div class="why-item"><div class="why-num">01</div><div><h4>We Understand the Local Threat Landscape</h4><p>MoMo fraud, SIM swaps, and local phishing scams are unique to Ghana. We know them because we live here too.</p></div></div>
-      <div class="why-item"><div class="why-num">02</div><div><h4>Certified Cybersecurity Expertise</h4><p>Our team holds university-level cybersecurity qualifications — not just online certificates.</p></div></div>
-      <div class="why-item"><div class="why-num">03</div><div><h4>Affordable for African Businesses</h4><p>We price our services fairly — because every Ghanaian business deserves protection, not just big corporations.</p></div></div>
-      <div class="why-item"><div class="why-num">04</div><div><h4>Plain Language, No Jargon</h4><p>We explain everything in simple, clear language — no technical background needed.</p></div></div>
-    </div>
-    <div class="why-visual">
-      <div class="terminal">
-        <div class="t-line"><span class="t-prompt">$</span><span class="t-cmd"> scan --target your-business.gh</span></div>
-        <div class="t-output">Initializing CyberGuard scan...</div>
-        <div class="t-output">Checking MoMo endpoints... <span class="t-success">✓ Secure</span></div>
-        <div class="t-output">Scanning email systems... <span class="t-warn">⚠ 2 issues found</span></div>
-        <div class="t-output">Checking staff awareness... <span class="t-warn">⚠ Training needed</span></div>
-        <div class="t-output">Reviewing data storage... <span class="t-success">✓ OK</span></div>
-        <div class="t-output">Checking social media... <span class="t-warn">⚠ Weak passwords</span></div>
-        <br/>
-        <div class="t-line"><span class="t-prompt">$</span><span class="t-cmd"> generate --report</span></div>
-        <div class="t-output">Security Score: <span class="t-warn">62/100</span></div>
-        <div class="t-output">Risk Level: <span class="t-warn">MEDIUM</span></div>
-        <div class="t-output">Recommendations: <span class="t-success">Ready</span></div>
-        <br/>
-        <div class="t-line"><span class="t-prompt">$</span><span class="t-cmd"> contact --cyberguard-ghana</span></div>
-        <div class="t-output t-success">We've got you covered. 🛡</div>
+      <div class="section-title">// Quick Actions</div>
+      <div class="quick-grid">
+        <div class="quick-card" onclick="showScreen('checker')">
+          <span class="quick-icon">🔍</span>
+          <div class="quick-title">Phone Check</div>
+          <div class="quick-desc">Scan your phone for spyware signs</div>
+        </div>
+        <div class="quick-card" onclick="showScreen('tips')">
+          <span class="quick-icon">💡</span>
+          <div class="quick-title">Safety Tips</div>
+          <div class="quick-desc">Learn how to stay protected</div>
+        </div>
+        <div class="quick-card danger" onclick="showScreen('contacts')">
+          <span class="quick-icon">🆘</span>
+          <div class="quick-title">Emergency</div>
+          <div class="quick-desc">Fraud hotlines & contacts</div>
+        </div>
+        <div class="quick-card" onclick="window.open('https://selar.com/70n4qlv9z0','_blank')">
+          <span class="quick-icon">📥</span>
+          <div class="quick-title">Get Guides</div>
+          <div class="quick-desc">Download our security guides</div>
+        </div>
+      </div>
+
+      <div class="section-title">// Live Threat Alerts</div>
+      <div class="alert-card">
+        <div class="alert-header">
+          <span>🔴</span> Active Scams in Ghana
+        </div>
+        <div class="alert-items">
+          <div class="alert-item">
+            <div class="alert-amount">GHS 1,200 lost</div>
+            <div class="alert-detail">MoMo scam — Accra • 2hrs ago</div>
+          </div>
+          <div class="alert-item">
+            <div class="alert-amount">SIM Swap Attack</div>
+            <div class="alert-detail">Kumasi resident targeted • Today</div>
+          </div>
+          <div class="alert-item">
+            <div class="alert-amount">Phishing Link Spreading</div>
+            <div class="alert-detail">Fake MTN reward — circulating now</div>
+          </div>
+          <div class="alert-item">
+            <div class="alert-amount">GHS 800 lost</div>
+            <div class="alert-detail">Wrong transfer scam — Takoradi</div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</section>
 
-<section id="about">
-  <div class="section-eyebrow">// About Us</div>
-  <div class="about-grid">
-    <div class="about-text">
-      <h2>A Ghanaian Company<br/>Fighting Digital Crime</h2>
-      <p>CyberGuard Ghana was founded in Accra by a certified cybersecurity professional with a mission to protect Ghanaians from the growing wave of digital threats targeting our communities.</p>
-      <p>We believe cybersecurity should not be reserved for large corporations. Every Ghanaian individual and small business deserves the knowledge and tools to stay safe online.</p>
-      <p>From mobile money fraud to business data breaches — we are here to educate, protect, and respond.</p>
-      <div class="about-badges">
-        <span class="badge">🎓 University Certified</span>
-        <span class="badge">🇬🇭 Ghana-Based</span>
-        <span class="badge">🛡 Est. 2026</span>
-        <span class="badge">📍 Accra, Ghana</span>
+    <!-- PHONE CHECKER -->
+    <div class="screen" id="screen-checker">
+      <div class="checker-intro">
+        <p>Answer honestly — this helps detect if your phone may be compromised. Tap each item to mark it as <b>Safe</b> or <b>Flagged</b>.</p>
+      </div>
+
+      <div class="section-title">// Check Your Phone</div>
+      <div class="check-list" id="checkList">
+        <div class="check-item" onclick="toggleCheck(this,'safe')" data-risk="low">
+          <div class="check-checkbox"></div>
+          <div class="check-text">
+            <div class="check-title">Battery drains unusually fast 🔋</div>
+            <div class="check-sub">Tap if this is happening on your phone</div>
+          </div>
+          <span class="check-flag risk">Risk</span>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this,'safe')" data-risk="low">
+          <div class="check-checkbox"></div>
+          <div class="check-text">
+            <div class="check-title">Phone gets hot when not in use 🌡️</div>
+            <div class="check-sub">Warm phone = background activity</div>
+          </div>
+          <span class="check-flag risk">Risk</span>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this,'safe')" data-risk="medium">
+          <div class="check-checkbox"></div>
+          <div class="check-text">
+            <div class="check-title">Data finishes faster than normal 📶</div>
+            <div class="check-sub">Spyware sends data to remote servers</div>
+          </div>
+          <span class="check-flag risk">Risk</span>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this,'safe')" data-risk="high">
+          <div class="check-checkbox"></div>
+          <div class="check-text">
+            <div class="check-title">Strange noises during calls 📞</div>
+            <div class="check-sub">Clicking or echoing = call monitoring</div>
+          </div>
+          <span class="check-flag risk">Risk</span>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this,'safe')" data-risk="high">
+          <div class="check-checkbox"></div>
+          <div class="check-text">
+            <div class="check-title">Unknown apps installed 📱</div>
+            <div class="check-sub">Apps you didn't install yourself</div>
+          </div>
+          <span class="check-flag risk">Risk</span>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this,'safe')" data-risk="high">
+          <div class="check-checkbox"></div>
+          <div class="check-text">
+            <div class="check-title">Screen lights up on its own 💡</div>
+            <div class="check-sub">Remote activation is a serious sign</div>
+          </div>
+          <span class="check-flag risk">Risk</span>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this,'safe')" data-risk="medium">
+          <div class="check-checkbox"></div>
+          <div class="check-text">
+            <div class="check-title">Someone always knows your location 📍</div>
+            <div class="check-sub">Without you telling them where you are</div>
+          </div>
+          <span class="check-flag risk">Risk</span>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this,'safe')" data-risk="medium">
+          <div class="check-checkbox"></div>
+          <div class="check-text">
+            <div class="check-title">Phone is suddenly very slow 🐢</div>
+            <div class="check-sub">Spyware consumes RAM and processing</div>
+          </div>
+          <span class="check-flag risk">Risk</span>
+        </div>
+      </div>
+
+      <div class="result-card" id="resultCard">
+        <div class="result-icon" id="resultIcon"></div>
+        <div class="result-title" id="resultTitle"></div>
+        <div class="result-desc" id="resultDesc"></div>
+      </div>
+
+      <button class="btn-check" onclick="runCheck()">Run Security Check</button>
+      <button class="btn-reset" onclick="resetCheck()">Reset</button>
+    </div>
+
+    <!-- TIPS -->
+    <div class="screen" id="screen-tips">
+      <div class="tips-filter">
+        <button class="filter-btn active" onclick="filterTips('all',this)">All Tips</button>
+        <button class="filter-btn" onclick="filterTips('momo',this)">MoMo Fraud</button>
+        <button class="filter-btn" onclick="filterTips('spyware',this)">Spyware</button>
+        <button class="filter-btn" onclick="filterTips('social',this)">Social Media</button>
+        <button class="filter-btn" onclick="filterTips('business',this)">Business</button>
+      </div>
+
+      <div class="tips-list" id="tipsList"></div>
+    </div>
+
+    <!-- CONTACTS -->
+    <div class="screen" id="screen-contacts">
+      <div class="cyberguard-card">
+        <div class="cg-logo">🛡️</div>
+        <div class="cg-name"><span>Cyber</span>Guard Ghana</div>
+        <div class="cg-tagline">Protecting Ghanaians in the Digital Age</div>
+        <div class="cg-btns">
+          <a href="https://wa.me/233551567634" class="cg-btn primary">💬 WhatsApp Us</a>
+          <a href="https://dubuu0243.github.io/cyberguard-ghana" class="cg-btn secondary">🌐 Website</a>
+        </div>
+      </div>
+
+      <div class="section-title">// Emergency Fraud Contacts</div>
+      <div class="contacts-list">
+        <div class="contact-card">
+          <div class="contact-header">
+            <div class="contact-icon-box" style="background:rgba(255,204,0,0.1)">📱</div>
+            <div>
+              <div class="contact-name">MTN Ghana Fraud</div>
+              <div class="contact-role">MoMo fraud & account security</div>
+            </div>
+          </div>
+          <div class="contact-actions">
+            <a href="tel:0800190190" class="contact-btn">📞 Call Free</a>
+            <a href="sms:0800190190" class="contact-btn">💬 SMS</a>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-header">
+            <div class="contact-icon-box" style="background:rgba(231,76,60,0.1)">📡</div>
+            <div>
+              <div class="contact-name">Vodafone Cash Fraud</div>
+              <div class="contact-role">Vodafone Cash security</div>
+            </div>
+          </div>
+          <div class="contact-actions">
+            <a href="tel:0800500000" class="contact-btn">📞 Call Free</a>
+            <a href="sms:0800500000" class="contact-btn">💬 SMS</a>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-header">
+            <div class="contact-icon-box" style="background:rgba(52,152,219,0.1)">📶</div>
+            <div>
+              <div class="contact-name">AirtelTigo Money Fraud</div>
+              <div class="contact-role">AirtelTigo Money security</div>
+            </div>
+          </div>
+          <div class="contact-actions">
+            <a href="tel:0800100100" class="contact-btn">📞 Call Free</a>
+            <a href="sms:0800100100" class="contact-btn">💬 SMS</a>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-header">
+            <div class="contact-icon-box" style="background:rgba(39,174,96,0.1)">🏦</div>
+            <div>
+              <div class="contact-name">Bank of Ghana</div>
+              <div class="contact-role">Report fintech & MoMo fraud</div>
+            </div>
+          </div>
+          <div class="contact-actions">
+            <a href="tel:0302666174" class="contact-btn">📞 Call</a>
+            <a href="https://bog.gov.gh" class="contact-btn">🌐 Website</a>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-header">
+            <div class="contact-icon-box" style="background:rgba(231,76,60,0.1)">🚔</div>
+            <div>
+              <div class="contact-name">Ghana Police Service</div>
+              <div class="contact-role">Report cybercrime & fraud</div>
+            </div>
+          </div>
+          <div class="contact-actions">
+            <a href="tel:191" class="contact-btn">📞 191</a>
+            <a href="tel:18555" class="contact-btn">📞 18555</a>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-header">
+            <div class="contact-icon-box" style="background:rgba(245,166,35,0.1)">📡</div>
+            <div>
+              <div class="contact-name">NCA Ghana</div>
+              <div class="contact-role">National Communications Authority</div>
+            </div>
+          </div>
+          <div class="contact-actions">
+            <a href="tel:0302221567" class="contact-btn">📞 Call</a>
+            <a href="https://nca.org.gh" class="contact-btn">🌐 Website</a>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="founder-card">
-      <div class="founder-avatar">👨‍💻</div>
-      <div class="founder-name">Simeon Ayim</div>
-      <div class="founder-title">Founder & Lead Security Consultant</div>
-      <p class="founder-bio">Cybersecurity graduate with expertise in digital fraud prevention, security auditing, and online safety education. On a mission to make Ghana's digital space safer for everyone.</p>
-      <div style="margin-top:20px;">
-        <a href="https://selar.com/70n4qlv9z0" target="_blank" style="color:var(--gold);font-size:13px;text-decoration:none;">🛍 Visit Our Selar Store →</a>
+
+  </div><!-- end content -->
+
+  <!-- BOTTOM NAV -->
+  <div class="bottom-nav">
+    <button class="nav-item active" onclick="showScreen('home')" id="nav-home">
+      <span class="nav-icon">🏠</span>
+      <span class="nav-label">Home</span>
+    </button>
+    <button class="nav-item" onclick="showScreen('checker')" id="nav-checker">
+      <span class="nav-icon">🔍</span>
+      <span class="nav-label">Checker</span>
+    </button>
+    <button class="nav-item" onclick="showScreen('tips')" id="nav-tips">
+      <span class="nav-icon">💡</span>
+      <span class="nav-label">Tips</span>
+    </button>
+    <button class="nav-item" onclick="showScreen('contacts')" id="nav-contacts">
+      <span class="nav-icon">🆘</span>
+      <span class="nav-label">Emergency</span>
+    </button>
+  </div>
+
+</div><!-- end app -->
+
+<script>
+// ── NAVIGATION ──
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('screen-' + name).classList.add('active');
+  document.getElementById('nav-' + name).classList.add('active');
+  document.querySelector('.content').scrollTop = 0;
+}
+
+// ── CHECKER ──
+let checkedItems = new Set();
+
+function toggleCheck(el, type) {
+  const idx = Array.from(document.querySelectorAll('.check-item')).indexOf(el);
+  if (checkedItems.has(idx)) {
+    checkedItems.delete(idx);
+    el.classList.remove('checked','flagged');
+    el.querySelector('.check-checkbox').textContent = '';
+  } else {
+    checkedItems.add(idx);
+    el.classList.add('flagged');
+    el.querySelector('.check-checkbox').textContent = '⚠';
+  }
+}
+
+function runCheck() {
+  const total = document.querySelectorAll('.check-item').length;
+  const flagged = checkedItems.size;
+  const card = document.getElementById('resultCard');
+  card.classList.add('show');
+
+  if (flagged === 0) {
+    card.className = 'result-card show clean';
+    document.getElementById('resultIcon').textContent = '✅';
+    document.getElementById('resultTitle').textContent = 'Phone Looks Clean!';
+    document.getElementById('resultDesc').textContent = 'No major warning signs detected. Keep monitoring and stay alert. Update your phone regularly and never share your PIN or OTP.';
+  } else if (flagged <= 2) {
+    card.className = 'result-card show risk';
+    document.getElementById('resultIcon').textContent = '⚠️';
+    document.getElementById('resultTitle').textContent = flagged + ' Warning Sign' + (flagged>1?'s':'') + ' Detected';
+    document.getElementById('resultDesc').textContent = 'Some signs are present. Check your installed apps and permissions. Download our Phone Spy Detection Guide for full instructions.';
+  } else {
+    card.className = 'result-card show risk';
+    document.getElementById('resultIcon').textContent = '🚨';
+    document.getElementById('resultTitle').textContent = flagged + ' Warning Signs — High Risk!';
+    document.getElementById('resultDesc').textContent = 'Multiple signs detected. Your phone may be compromised. Contact CyberGuard Ghana immediately on WhatsApp: 0551567634';
+  }
+  card.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+function resetCheck() {
+  checkedItems.clear();
+  document.querySelectorAll('.check-item').forEach(el => {
+    el.classList.remove('checked','flagged');
+    el.querySelector('.check-checkbox').textContent = '';
+  });
+  document.getElementById('resultCard').classList.remove('show');
+}
+
+// ── TIPS DATA ──
+const tips = [
+  { cat:'momo', emoji:'💰', title:'Never share your PIN or OTP', body:'Your Mobile Money PIN is like your ATM password. No legitimate person — not even MTN or Vodafone staff — will ever ask for it.', action:'What to do: Hang up immediately if anyone asks for your PIN or OTP. Then call your network fraud line to report.'},
+  { cat:'momo', emoji:'🚫', title:'The wrong transfer scam', body:'Someone claims they sent you money by mistake and asks you to return it. They never actually sent anything — they just want your money.', action:'What to do: Always check your actual wallet balance before sending any money to a stranger.'},
+  { cat:'momo', emoji:'📵', title:'Fake network agent calls', body:'Scammers call pretending to be MTN, Vodafone, or AirtelTigo agents saying they need your details to "upgrade your account."', action:'What to do: Your network will NEVER call you asking for your PIN. Hang up and call the official fraud line.'},
+  { cat:'momo', emoji:'🔢', title:'Set a daily transaction limit', body:'Reduce your maximum daily transfer amount so that even if a scammer gets access, they cannot take everything at once.', action:'How to do it: MTN — Dial *170# → My Account. Vodafone — Dial *110# → My Account.'},
+  { cat:'spyware', emoji:'🔋', title:'Battery drain = possible spyware', body:'Spy apps run 24/7 in the background constantly sending your data to someone else. This drains your battery faster than normal.', action:'How to check: Settings → Battery → Battery Usage. Look for unknown apps using high battery.'},
+  { cat:'spyware', emoji:'📊', title:'Check your data usage monthly', body:'Spyware sends your messages, photos, and location to a remote server using your mobile data without your knowledge.', action:'How to check: Settings → Network → Data Usage. Sort by highest. Unknown app using data? Investigate immediately.'},
+  { cat:'spyware', emoji:'🔐', title:'Check Device Admin Apps', body:'Spyware often grants itself Device Administrator rights to prevent you from deleting it. This is the first place to check.', action:'How to check: Settings → Security → Device Admin Apps. Remove anything you don\'t recognize.'},
+  { cat:'spyware', emoji:'📍', title:'Review your location permissions', body:'Many apps request location access they don\'t need. Spyware specifically targets this permission to track your movements.', action:'How to check: Settings → Location → App Permissions. Remove location access from any suspicious app.'},
+  { cat:'social', emoji:'🔑', title:'Enable Two-Factor Authentication', body:'2FA adds a second layer of security to your accounts. Even if someone steals your password, they cannot log in without the second code.', action:'How to enable: Facebook → Settings → Security → Two-Factor Authentication. Do the same for Gmail and WhatsApp.'},
+  { cat:'social', emoji:'💬', title:'Check your WhatsApp Linked Devices', body:'Someone may be reading your WhatsApp from their own device using WhatsApp Web without your knowledge.', action:'How to check: WhatsApp → Three dots → Linked Devices. Log out of any device you don\'t recognize immediately.'},
+  { cat:'social', emoji:'🎣', title:'How to spot a phishing link', body:'Fake links try to steal your login details. They look almost real but have small differences in the URL — like "faceb00k.com" instead of "facebook.com."', action:'What to do: Never click links from unknown numbers. When in doubt, go directly to the website by typing the address yourself.'},
+  { cat:'business', emoji:'📸', title:'Never accept payment screenshots', body:'Scammers send fake payment screenshots to trick businesses into releasing goods before actual payment arrives.', action:'What to do: Only release goods or services after you can see the money IN your actual wallet or bank account — not a screenshot.'},
+  { cat:'business', emoji:'🏢', title:'Protect your business WhatsApp', body:'Your business WhatsApp is a target for hackers. A hacked business account can damage your reputation and lose you customers.', action:'What to do: Enable two-step verification in WhatsApp Settings → Account → Two-Step Verification. Use a strong 6-digit PIN.'},
+];
+
+let currentFilter = 'all';
+
+function renderTips(filter) {
+  const list = document.getElementById('tipsList');
+  const filtered = filter === 'all' ? tips : tips.filter(t => t.cat === filter);
+  list.innerHTML = filtered.map((t,i) => `
+    <div class="tip-card" onclick="toggleTip(this)">
+      <div class="tip-top">
+        <span class="tip-emoji">${t.emoji}</span>
+        <span class="tip-category">${t.cat}</span>
+      </div>
+      <div class="tip-title">${t.title}</div>
+      <div class="tip-body">${t.body}</div>
+      <div class="tip-expanded">
+        <div class="tip-action">
+          <div class="tip-action-label">⚡ Action Step</div>
+          <div class="tip-action-text">${t.action}</div>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  `).join('');
+}
 
-<section id="contact">
-  <div class="section-eyebrow">// Get In Touch</div>
-  <h2>Ready to Get Protected?</h2>
-  <p class="section-desc">Whether you need a security audit, training, or just have a question — reach out and we'll respond within 24 hours.</p>
-  <div class="contact-grid">
-    <div class="contact-info">
-      <div class="contact-item"><div class="contact-icon">📍</div><div><h4>Location</h4><p>Accra, Ghana</p></div></div>
-      <div class="contact-item"><div class="contact-icon">💬</div><div><h4>WhatsApp</h4><p><a href="https://wa.me/233551567634" target="_blank" style="color:var(--gold);text-decoration:none;">+233 055 156 7634</a></p></div></div>
-      <div class="contact-item"><div class="contact-icon">🛍</div><div><h4>Digital Products</h4><p>selar.com/70n4qlv9z0</p></div></div>
-      <div class="contact-item"><div class="contact-icon">⏰</div><div><h4>Response Time</h4><p>Within 24 hours</p></div></div>
-    </div>
-    <div class="contact-form">
-      <div class="form-group"><label>Your Name</label><input type="text" placeholder="e.g. Kofi Mensah" /></div>
-      <div class="form-group"><label>Phone / WhatsApp</label><input type="text" placeholder="e.g. 0244 000 000" /></div>
-      <div class="form-group">
-        <label>What do you need?</label>
-        <select>
-          <option value="">Select a service...</option>
-          <option>Security Audit for my Business</option>
-          <option>MoMo Fraud Protection Training</option>
-          <option>Cybersecurity Training for my Team</option>
-          <option>I've been scammed — Incident Response</option>
-          <option>General Inquiry</option>
-        </select>
-      </div>
-      <div class="form-group"><label>Message</label><textarea placeholder="Tell us more about what you need..."></textarea></div>
-      <button class="btn-submit">Send Message →</button>
-    </div>
-  </div>
-</section>
+function toggleTip(el) {
+  const exp = el.querySelector('.tip-expanded');
+  exp.classList.toggle('show');
+}
 
-<footer>
-  <div class="footer-brand"><span>Cyber</span>Guard Ghana</div>
-  <div class="footer-copy">© 2026 CyberGuard Ghana. Protecting Ghanaians in the Digital Age.</div>
-  <div class="footer-links">
-    <a href="#services">Services</a>
-    <a href="#products">Products</a>
-    <a href="#contact">Contact</a>
-  </div>
-</footer>
+function filterTips(cat, btn) {
+  currentFilter = cat;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTips(cat);
+}
 
+// Init tips
+renderTips('all');
+</script>
 </body>
 </html>
